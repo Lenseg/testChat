@@ -1,0 +1,58 @@
+:host {
+  margin: 10px;
+  padding: 10px;
+  max-width: 46%;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #5555C7;
+  float: left;
+  position: relative;
+  clear: both;
+}
+:host.send {
+    float: right;
+    background: #e7e2e9;
+    color: #040F0F;
+}
+:host:after {
+    content: '';
+    display: block;
+    position: absolute;
+    border: 10px;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 12px 0 0;
+    border-color: #5555C7 transparent transparent transparent;
+}
+:host.send:after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 12px 12px 0;
+    border-color: transparent #e7e2e9 transparent transparent;
+    right: 0;
+    left: auto;
+}
+.message_time{
+    text-align: right;
+    display: block;
+}
+.message_sender{
+  font-weight: bold;
+}
+.message_read{
+  float: left;
+  width: 10px;
+}
+.message_read-send{
+  display: none;
+}
+:host.send .message_read{
+  display: none;
+}
+:host.send .message_read-send{
+  display: block;
+}
