@@ -1,12 +1,23 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="">
+  <div class="chatStart">
+    {{chatStart | date:'fullDate'}}
+  </div>
   <div [perfect-scrollbar]="scrollbarConfig" #chatbox class="chatbox">
     <div class="chatbox_content" #chatboxContent>
-        <app-message [ngClass]="{'send':uid===item.sender}" *ngFor="let item of items | async" [message]="item"></app-message>
+        <div class="clearfix" *ngFor="let item of items | async; let i = index">
+          <div class="date-splitter" *ngIf="(!i && !isToday(item)) || !isToday(item) && newDay(item, items[i-1])">
+            {{item.time | date:'fullDate'}}
+          </div>
+          <div class="date-splitter" *ngIf="(!i && isToday(item)) || isToday(item) && newDay(item, items[i-1])">
+            Today
+          </div>
+          <app-message [ngClass]="{'send':uid===item.sender}"  [message]="item"></app-message>
+        </div>
     </div>
   </div>
   <div class="message-input">
-    <input class="message-input_input input-message" type="text" id="message" *ngIf="(user | async)?.uid" placeholder="What is it that you do?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal" />
+    <input class="message-input_input input-message" type="text" id="message" *ngIf="(user | async)?.uid" placeholder="Type a message" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal" />
     <button class="message-input_send button-send" type="button"(click)="Send(msgVal)">
       <img class="icon-send" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMzNC41IDMzNC41IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMzQuNSAzMzQuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIGQ9Ik0zMzIuNzk3LDEzLjY5OWMtMS40ODktMS4zMDYtMy42MDgtMS42MDktNS40MDQtMC43NzZMMi44OTMsMTYzLjY5NWMtMS43NDcsMC44MTItMi44NzIsMi41NTUtMi44OTMsNC40ODEgIHMxLjA2NywzLjY5MywyLjc5Nyw0LjU0Mmw5MS44MzMsNDUuMDY4YzEuNjg0LDAuODI3LDMuNjkyLDAuNjQsNS4xOTYtMC40ODRsODkuMjg3LTY2LjczNGwtNzAuMDk0LDcyLjEgIGMtMSwxLjAyOS0xLjUxLDIuNDM4LTEuNCwzLjg2OGw2Ljk3OSw5MC44ODljMC4xNTUsMi4wMTQsMS41MDUsMy43MzYsMy40MjQsNC4zNjdjMC41MTMsMC4xNjgsMS4wNCwwLjI1LDEuNTYxLDAuMjUgIGMxLjQyOSwwLDIuODE5LTAuNjEzLDMuNzg2LTEuNzMzbDQ4Ljc0Mi01Ni40ODJsNjAuMjU1LDI4Ljc5YzEuMzA4LDAuNjI1LDIuODIyLDAuNjUxLDQuMTUxLDAuMDczICBjMS4zMjktMC41NzksMi4zNDEtMS43MDUsMi43NzUtMy4wODdMMzM0LjI3LDE4Ljk1NkMzMzQuODY0LDE3LjA2NiwzMzQuMjg1LDE1LjAwNSwzMzIuNzk3LDEzLjY5OXoiIGZpbGw9IiNGRkZGRkYiLz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
     </button>

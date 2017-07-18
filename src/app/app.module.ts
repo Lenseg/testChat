@@ -9,7 +9,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
 import { MessageComponent } from './message/message.component';
-import { ControlBoardComponent } from './control-board/control-board.component';
 
 
 import { PerfectScrollbarModule } from 'angular2-perfect-scrollbar';
@@ -31,8 +30,7 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    MessageComponent,
-    ControlBoardComponent
+    MessageComponent
   ],
   imports: [
     BrowserModule,

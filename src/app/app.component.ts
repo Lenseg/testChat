@@ -18,6 +18,7 @@ export class AppComponent {
   @ViewChild(PerfectScrollbarDirective) chatboxDir:PerfectScrollbarDirective;
   msgVal: string = '';
   uid:string;
+  chatStart:Date;
   scrollbarConfig = {
     suppressScrollX:true
   };
@@ -29,6 +30,7 @@ export class AppComponent {
       }
     });
     this.items.subscribe(snapshots => {
+      this.chatStart = new Date(snapshots[0].time);
       snapshots.forEach(snapshot => {
         if(this.uid !== snapshot.sender)
           this.items.update(snapshot.$key, { read: true })
@@ -58,7 +60,19 @@ export class AppComponent {
       this.msgVal = '';
       this.scollDown();
   }
-
+  isToday(message){
+    let time = new Date(message.time);
+    let today = new Date();
+    console.log(time.getDay() === today.getDay(),'today');
+    return time.getDay() === today.getDay();
+  }
+  newDay(message,messageprev){
+    if(!messageprev)
+      return false;
+    let time = new Date(messageprev.time);
+    let today = new Date(message.time);
+    return time.getDay() === today.getDay();
+  }
   scollDown(){
     this.chatbox.nativeElement.scrollTop = this.chatboxContent.nativeElement.offsetHeight - this.chatbox.nativeElement.offsetHeight;
     this.chatboxDir.update();
